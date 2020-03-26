@@ -21,12 +21,12 @@ dependencies {
     implementation "org.codehaus.groovy:groovy-all:${groovyVersion}"
 
     // Spring
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "${springBootVersion}"
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
 //    implementation 'org.springframework.boot:spring-boot-starter-jetty'
     runtime 'org.springframework.boot:spring-boot-devtools'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 
     // Spock
-    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: "${springBootVersion}"
     testImplementation "org.spockframework:spock-core:${spockVersion}"
     testImplementation "org.spockframework:spock-spring:${spockVersion}"
     testRuntime 'cglib:cglib-nodep:3.2.4'
