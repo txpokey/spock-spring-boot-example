@@ -1,29 +1,34 @@
-plugins {
-    id 'groovy'
-    id 'idea'
-    id 'org.springframework.boot' version '1.5.7.RELEASE'
-}
+apply plugin: 'groovy'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
     jcenter()
+    mavenCentral()
+    maven { url "https://repo.spring.io/libs-release/" }
 }
-
+buildDir="$projectDir/out"
+clean {
+    delete 'out'
+    delete 'build'
+}
 dependencies {
     // Groovy
-    compile 'org.codehaus.groovy:groovy-all:2.4.7'
+    implementation "org.codehaus.groovy:groovy-all:${groovyVersion}"
 
     // Spring
-    compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.springframework.boot:spring-boot-starter-jetty'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "${springBootVersion}"
+//    implementation 'org.springframework.boot:spring-boot-starter-jetty'
     runtime 'org.springframework.boot:spring-boot-devtools'
 
     // Spock
-    testCompile 'org.springframework.boot:spring-boot-starter-test'
-    testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
-    testCompile 'org.spockframework:spock-spring:1.1-groovy-2.4'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: "${springBootVersion}"
+    testImplementation "org.spockframework:spock-core:${spockVersion}"
+    testImplementation "org.spockframework:spock-spring:${spockVersion}"
     testRuntime 'cglib:cglib-nodep:3.2.4'
 }
 
@@ -31,5 +36,25 @@ idea {
     module {
         inheritOutputDirs = false
         outputDir = file("$buildDir/classes/main/")
+    }
+}
+wrapper {
+    gradleVersion = '6.2.2'
+    distributionType = Wrapper.DistributionType.BIN
+}
+buildscript {
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven { url "https://repo.spring.io/plugins-release/" }
+        maven { url "https://repo.spring.io/libs-release/" }
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath("org.codehaus.groovy:groovy:${groovyVersion}")
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.9.RELEASE"
+        classpath group: 'org.sonarqube', name: 'org.sonarqube.gradle.plugin', version: '2.7.1'
     }
 }
