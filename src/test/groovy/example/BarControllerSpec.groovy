@@ -18,17 +18,22 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @Import(IntegrationTestConfiguration)
 class BarControllerSpec extends Specification {
     @Autowired
-    TestRestTemplate restTemplate
+    TestRestTemplate testRestTemplate
 
     @Autowired
     ExternalApiClient client
+
+    def "sanityCheck"() {
+        expect:
+        client
+    }
 
     def '/bar/you should return world'() {
         given:
         1 * client.findByName('happy') >> new Hello('happy')
 
         when:
-        def entity = restTemplate.getForEntity('/bar/happy', Hello)
+        def entity = testRestTemplate.getForEntity('/bar/happy', Hello)
 
         then:
         entity.statusCode == HttpStatus.OK

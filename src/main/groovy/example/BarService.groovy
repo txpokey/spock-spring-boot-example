@@ -1,17 +1,19 @@
 package example
 
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
 class BarService {
-    final ExternalApiClient client
+    private final ExternalApiClient client
 
-    BarService(ExternalApiClient client) {
+    BarService(@Autowired ExternalApiClient client) {
         this.client = client
         assert client
     }
 
     Hello hello(String name) {
-        client.findByName(name)
+        def hello = client.findByName(name)
+        hello
     }
 }

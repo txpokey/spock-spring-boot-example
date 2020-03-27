@@ -1,6 +1,8 @@
 package example
 
+
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Profile
 import spock.mock.DetachedMockFactory
 
 /**
@@ -8,6 +10,7 @@ import spock.mock.DetachedMockFactory
  *
  * @author Hidetake Iwata
  */
+@Profile("mockIntegration")
 class IntegrationTestConfiguration {
     private final detachedMockFactory = new DetachedMockFactory()
 
@@ -15,4 +18,5 @@ class IntegrationTestConfiguration {
     ExternalApiClient externalApiClient() {
         detachedMockFactory.Mock(ExternalApiClient)
     }
+
 }
