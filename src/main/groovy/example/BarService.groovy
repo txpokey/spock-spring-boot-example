@@ -1,8 +1,5 @@
 package example
 
-import org.springframework.stereotype.Service
-
-//@Service
 class BarService {
     final ExternalApiClient client
 

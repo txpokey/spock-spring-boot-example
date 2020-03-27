@@ -1,11 +1,9 @@
 package example
 
-
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.context.annotation.Import
-import org.springframework.context.annotation.Profile
 import org.springframework.http.HttpStatus
 import spock.lang.Specification
 
@@ -16,17 +14,14 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
  *
  * @author Hidetake Iwata
  */
-@Profile("deadbeef")
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @Import(IntegrationTestConfiguration)
 class BarControllerSpec extends Specification {
     @Autowired
-    TestRestTemplate restTemplate
+    TestRestTemplate testRestTemplate
 
     @Autowired
     ExternalApiClient client
-//    @SpringBean
-//    ExternalApiClient client = Mock()
 
     def "sanityCheck"() {
         expect:
@@ -38,7 +33,7 @@ class BarControllerSpec extends Specification {
         1 * client.findByName('happy') >> new Hello('happy')
 
         when:
-        def entity = restTemplate.getForEntity('/bar/happy', Hello)
+        def entity = testRestTemplate.getForEntity('/bar/happy', Hello)
 
         then:
         entity.statusCode == HttpStatus.OK
