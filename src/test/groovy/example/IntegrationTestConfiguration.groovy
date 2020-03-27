@@ -1,5 +1,6 @@
 package example
 
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import spock.mock.DetachedMockFactory
 
@@ -14,5 +15,14 @@ class IntegrationTestConfiguration {
     @Bean
     ExternalApiClient externalApiClient() {
         detachedMockFactory.Mock(ExternalApiClient)
+    }
+
+    @Autowired
+    ExternalApiClient externalApiClient
+    @Bean
+    BarService getService(){
+        assert externalApiClient
+        def service = new BarService(externalApiClient)
+        service
     }
 }

@@ -2,7 +2,7 @@ package example
 
 import org.springframework.stereotype.Service
 
-@Service
+//@Service
 class BarService {
     final ExternalApiClient client
 
@@ -12,6 +12,7 @@ class BarService {
     }
 
     Hello hello(String name) {
-        client.findByName(name)
+        def hello = client.findByName(name)
+        hello
     }
 }

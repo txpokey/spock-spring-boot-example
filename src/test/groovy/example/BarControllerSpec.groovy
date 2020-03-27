@@ -1,5 +1,6 @@
 package example
 
+
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
@@ -22,6 +23,13 @@ class BarControllerSpec extends Specification {
 
     @Autowired
     ExternalApiClient client
+//    @SpringBean
+//    ExternalApiClient client = Mock()
+
+    def "sanityCheck"() {
+        expect:
+        client
+    }
 
     def '/bar/you should return world'() {
         given:
