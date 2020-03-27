@@ -1,9 +1,13 @@
 package example
 
-class BarService {
-    final ExternalApiClient client
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 
-    BarService(ExternalApiClient client) {
+@Service
+class BarService {
+    private final ExternalApiClient client
+
+    BarService(@Autowired ExternalApiClient client) {
         this.client = client
         assert client
     }

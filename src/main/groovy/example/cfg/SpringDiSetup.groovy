@@ -1,8 +1,7 @@
 package example.cfg
 
-import example.BarService
+
 import example.ExternalApiClient
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
@@ -17,13 +16,4 @@ class SpringDiSetup{
         candidate
     }
 
-    @Autowired
-    ExternalApiClient externalApiClient
-
-    @Bean
-    BarService getServiceWithRealClient(){
-        assert externalApiClient
-        def service = new BarService(externalApiClient)
-        service
-    }
 }
