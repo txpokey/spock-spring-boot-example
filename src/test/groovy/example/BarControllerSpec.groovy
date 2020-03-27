@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.context.annotation.Import
+import org.springframework.core.env.Environment
 import org.springframework.http.HttpStatus
 import spock.lang.Specification
 
@@ -23,9 +24,16 @@ class BarControllerSpec extends Specification {
     @Autowired
     ExternalApiClient client
 
+//    @Autowired
+//    private RestTemplate restTemplateIsNotInjected
+
+    @Autowired
+    Environment environmentIsInjected
+
     def "sanityCheck"() {
         expect:
         client
+        environmentIsInjected
     }
 
     def '/bar/you should return world'() {
