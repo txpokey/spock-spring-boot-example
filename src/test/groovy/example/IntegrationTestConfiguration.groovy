@@ -20,7 +20,7 @@ class IntegrationTestConfiguration {
     @Autowired
     ExternalApiClient externalApiClient
     @Bean
-    BarService getService(){
+    BarService getServiceWithMockedClient(){
         assert externalApiClient
         def service = new BarService(externalApiClient)
         service
